@@ -5,6 +5,14 @@ const tudo = document.getElementById("tabela");
 // Tabela UFESP
 const ValorUFESP_2024 = 35.36;
 const AliquotaFixa_2024 = 0.04;
+const aliqF1 = 0.02;
+const aliqF2 = 0.04;
+const aliqF3 = 0.06;
+const aliqF4 = 0.08;
+const faixa1 = 10000 * aliqF1;
+const faixa2 = (85000 - 10000) * aliqF2 + faixa1;
+const faixa3 = (280000 - 85000) * aliqF3 + faixa2;
+let result = 0;
 
 tudo.style.display = "flex";
 tudo.style.justifyContent = "center";
@@ -31,7 +39,7 @@ rows[3].cells[0].textContent = "Carga Tributária";
 const inputCell = rows[0].cells[1];
 const userInput = document.createElement("input");
 userInput.type = "text"; // Change type to text
-userInput.placeholder = "Digite o valor";
+userInput.placeholder = "DIGITE SEU VALOR AQUI";
 userInput.style.display = "flex";
 userInput.style.textAlign = "right"; // Align input to the right
 userInput.style.border = "0";
@@ -69,31 +77,43 @@ userInput.addEventListener("input", function () {
   // Tabela UFESP
   if (number > 0 && number <= 10000) {
     // console.log("Faixa 1");
+    result = number * aliqF1;
   } else if (number > 10000 && number <= 85000) {
     // console.log("Faixa 2");
+    result = number * aliqF2 + faixa1;
   } else if (number > 85000 && number <= 280000) {
     // console.log("Faixa 3");
+    result = (number - 85000) * aliqF3 + faixa2;
   } else if (number > 280000) {
     // console.log("Faixa 4");
+    console.log(faixa3);
+    result = (number - 280000) * aliqF4 + faixa3;
   }
 
-  let calculoUFESP = isNaN(number) ? 0 : number + number;
-  let square = isNaN(number) ? 0 : Math.pow(number, 2);
-  let divisao = isNaN(number) ? 0 : calculoUFESP / square;
+  let calculoUFESP = isNaN(number) ? 0 : result;
+  let valorEmRS = isNaN(number) ? 0 : result * ValorUFESP_2024;
+  let cargaTributaria = isNaN(number)
+    ? 0
+    : (result - number * AliquotaFixa_2024) / (number * AliquotaFixa_2024);
 
   // Mostrar resultados
   rows[1].cells[1].textContent = `R$ ${numberFormatter.format(calculoUFESP)}`; // Format calculoUFESP
-  rows[2].cells[1].textContent = `R$ ${numberFormatter.format(square)}`; // Format square
-  rows[3].cells[1].textContent = `${numberFormatter.format(divisao)}%`; // Format square
+  rows[2].cells[1].textContent = `R$ ${numberFormatter.format(valorEmRS)}`; // Format valorEmR$
+  rows[3].cells[1].textContent = `${parseFloat(
+    (cargaTributaria * 100).toFixed(6)
+  )}%`; // Format cargaTributaria
 
   if (number === 0) {
     for (let i = 1; i < 4; i++) {
-      rows[i].cells[1].textContent = "R$ 0,00"; // Format zero
+      rows[i].cells[1].textContent = "Valor não pode ser 0"; // Format zero
     }
   }
 
   let fourthRowMessage =
-    number > 10 ? `Aumento na Carga Tributária:` : `Perda na Carga Tributária:`;
+    cargaTributaria > 0
+      ? `Aumento na Carga Tributária:`
+      : `Perda na Carga Tributária:`;
+
   rows[3].cells[0].textContent = fourthRowMessage;
 });
 
