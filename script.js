@@ -18,7 +18,7 @@ for (let i = 0; i < 4; i++) {
   rows[i].style.backgroundColor = i % 2 === 0 ? "white" : "#ebfbff";
 }
 
-rows[0].cells[0].textContent = "Valor para cálculo:";
+rows[0].cells[0].textContent = "Base para Cálculo em UFESP:";
 rows[1].cells[0].textContent = "Valor Proposto - Em UFESP:";
 rows[2].cells[0].textContent = "Valor Proposto - Em R$:";
 rows[3].cells[0].textContent = "Carga Tributária";
@@ -52,28 +52,27 @@ userInput.addEventListener("input", function () {
   // Replace commas with periods for correct decimal parsing
   let sanitizedValue = this.value.replace(",", ".");
 
-  // Input user
-  let number = parseFloat(sanitizedValue);
-
-  // Cálculos
-  let sum = isNaN(number) ? "" : number + number;
-  let square = isNaN(number) ? "" : Math.pow(number, 2);
+  // If input is null or empty, set number to 0
+  let number = sanitizedValue.trim() === "" ? 0 : parseFloat(sanitizedValue);
 
   // Format numbers with Brazilian Portuguese locale
-  const numberFormatter = new Intl.NumberFormat("pt-BR");
+  const numberFormatter = new Intl.NumberFormat("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  // Cálculos
+  let sum = isNaN(number) ? 0 : number + number;
+  let square = isNaN(number) ? 0 : Math.pow(number, 2);
 
   // Mostrar resultados
-  rows[1].cells[1].textContent = `R$ ${numberFormatter.format(sum.toFixed(2))}`; // Format sum with two decimal places
-  rows[2].cells[1].textContent = `R$ ${numberFormatter.format(
-    square.toFixed(2)
-  )}`; // Format square with two decimal places
-  rows[3].cells[1].textContent = `R$ ${numberFormatter.format(
-    square.toFixed(2)
-  )}`; // Format square with two decimal places
+  rows[1].cells[1].textContent = `R$ ${numberFormatter.format(sum)}`; // Format sum
+  rows[2].cells[1].textContent = `R$ ${numberFormatter.format(square)}`; // Format square
+  rows[3].cells[1].textContent = `R$ ${numberFormatter.format(square)}`; // Format square
 
   if (number === 0) {
     for (let i = 1; i < 4; i++) {
-      rows[i].cells[1].textContent = "R$ 0,00"; // Format zero with two decimal places
+      rows[i].cells[1].textContent = "R$ 0,00"; // Format zero
     }
   }
 
