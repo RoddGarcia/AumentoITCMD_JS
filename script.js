@@ -96,11 +96,14 @@ userInput.addEventListener("input", function () {
     ? 0
     : (result - number * AliquotaFixa_2024) / (number * AliquotaFixa_2024);
 
+  let valorFinal_cargaTributaria =
+    cargaTributaria < 0 ? -cargaTributaria : cargaTributaria;
+
   // Mostrar resultados
   rows[1].cells[1].textContent = `R$ ${numberFormatter.format(calculoUFESP)}`; // Format calculoUFESP
   rows[2].cells[1].textContent = `R$ ${numberFormatter.format(valorEmRS)}`; // Format valorEmR$
   rows[3].cells[1].textContent = `${parseFloat(
-    (cargaTributaria * 100).toFixed(6)
+    (valorFinal_cargaTributaria * 100).toFixed(6)
   )}%`; // Format cargaTributaria
 
   if (number === 0) {
@@ -112,7 +115,7 @@ userInput.addEventListener("input", function () {
   let fourthRowMessage =
     cargaTributaria > 0
       ? `Aumento na Carga Tributária:`
-      : `Perda na Carga Tributária:`;
+      : `Redução na Carga Tributária:`;
 
   rows[3].cells[0].textContent = fourthRowMessage;
 });
