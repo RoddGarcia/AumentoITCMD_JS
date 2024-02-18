@@ -2,6 +2,10 @@
 const table = document.createElement("table");
 const tudo = document.getElementById("tabela");
 
+// Tabela UFESP
+const ValorUFESP_2024 = 35.36;
+const AliquotaFixa_2024 = 0.04;
+
 tudo.style.display = "flex";
 tudo.style.justifyContent = "center";
 table.style.width = "50vw";
@@ -42,33 +46,45 @@ for (let i = 0; i < rows.length; i++) {
 
 rows[1].cells[1].textContent = "R$ 0,00";
 rows[2].cells[1].textContent = "R$ 0,00";
-rows[3].cells[1].textContent = "R$ 0,00";
+rows[3].cells[1].textContent = "0%";
 
 // Event Listener
 userInput.addEventListener("input", function () {
-  // Remove non-numeric characters except commas and periods
+  // Remove caracteres não-númericos
   this.value = this.value.replace(/[^\d.,]/g, "");
 
-  // Replace commas with periods for correct decimal parsing
+  // Troca vírgulas por pontos (apenas para cálculo)
   let sanitizedValue = this.value.replace(",", ".");
 
   // If input is null or empty, set number to 0
   let number = sanitizedValue.trim() === "" ? 0 : parseFloat(sanitizedValue);
 
-  // Format numbers with Brazilian Portuguese locale
+  // Formatar números em português
   const numberFormatter = new Intl.NumberFormat("pt-BR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
-  // Cálculos
-  let sum = isNaN(number) ? 0 : number + number;
+  // ---------------- Cálculos ------------------
+  // Tabela UFESP
+  if (number > 0 && number <= 10000) {
+    // console.log("Faixa 1");
+  } else if (number > 10000 && number <= 85000) {
+    // console.log("Faixa 2");
+  } else if (number > 85000 && number <= 280000) {
+    // console.log("Faixa 3");
+  } else if (number > 280000) {
+    // console.log("Faixa 4");
+  }
+
+  let calculoUFESP = isNaN(number) ? 0 : number + number;
   let square = isNaN(number) ? 0 : Math.pow(number, 2);
+  let divisao = isNaN(number) ? 0 : calculoUFESP / square;
 
   // Mostrar resultados
-  rows[1].cells[1].textContent = `R$ ${numberFormatter.format(sum)}`; // Format sum
+  rows[1].cells[1].textContent = `R$ ${numberFormatter.format(calculoUFESP)}`; // Format calculoUFESP
   rows[2].cells[1].textContent = `R$ ${numberFormatter.format(square)}`; // Format square
-  rows[3].cells[1].textContent = `R$ ${numberFormatter.format(square)}`; // Format square
+  rows[3].cells[1].textContent = `${numberFormatter.format(divisao)}%`; // Format square
 
   if (number === 0) {
     for (let i = 1; i < 4; i++) {
