@@ -31,8 +31,8 @@ for (let i = 0; i < 4; i++) {
 }
 
 rows[0].cells[0].textContent = "Base para Cálculo em UFESP:";
-rows[1].cells[0].textContent = "Valor Proposto - Em UFESP:";
-rows[2].cells[0].textContent = "Valor Proposto - Em R$:";
+rows[1].cells[0].textContent = "Valor Proposto (PL 07/24) - Em UFESP:";
+rows[2].cells[0].textContent = "Valor Proposto (PL 07/24) - Em R$:";
 rows[3].cells[0].textContent = "Carga Tributária";
 
 // Create input element for user number
@@ -52,8 +52,8 @@ for (let i = 0; i < rows.length; i++) {
   rows[i].cells[1].style.textAlign = "right";
 }
 
-rows[1].cells[1].textContent = "R$ 0,00";
-rows[2].cells[1].textContent = "R$ 0,00";
+rows[1].cells[1].textContent = "0,00";
+rows[2].cells[1].textContent = "0,00";
 rows[3].cells[1].textContent = "0%";
 
 // Event Listener
@@ -100,8 +100,8 @@ userInput.addEventListener("input", function () {
     cargaTributaria < 0 ? -cargaTributaria : cargaTributaria;
 
   // Mostrar resultados
-  rows[1].cells[1].textContent = `R$ ${numberFormatter.format(calculoUFESP)}`; // Format calculoUFESP
-  rows[2].cells[1].textContent = `R$ ${numberFormatter.format(valorEmRS)}`; // Format valorEmR$
+  rows[1].cells[1].textContent = `${numberFormatter.format(calculoUFESP)}`; // Format calculoUFESP
+  rows[2].cells[1].textContent = `${numberFormatter.format(valorEmRS)}`; // Format valorEmR$
   rows[3].cells[1].textContent = `${parseFloat(
     (valorFinal_cargaTributaria * 100).toFixed(6)
   )}%`; // Format cargaTributaria
