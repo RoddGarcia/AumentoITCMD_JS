@@ -97,14 +97,14 @@ userInput.addEventListener("input", function () {
     : (result - number * AliquotaFixa_2024) / (number * AliquotaFixa_2024);
 
   let valorFinal_cargaTributaria =
-    cargaTributaria < 0 ? -cargaTributaria : cargaTributaria;
+    cargaTributaria < 0 ? -(cargaTributaria) : parseFloat((cargaTributaria * 100).toFixed(6));
 
   // Mostrar resultados
   rows[1].cells[1].textContent = `${numberFormatter.format(calculoUFESP)}`; // Format calculoUFESP
   rows[2].cells[1].textContent = `${numberFormatter.format(valorEmRS)}`; // Format valorEmR$
-  rows[3].cells[1].textContent = `${parseFloat(
-    (valorFinal_cargaTributaria * 100).toFixed(6)
-  )}%`; // Format cargaTributaria
+  rows[3].cells[1].textContent = `${
+    (valorFinal_cargaTributaria)
+  }%`; // Format cargaTributaria
 
   if (number === 0) {
     for (let i = 1; i < 4; i++) {
