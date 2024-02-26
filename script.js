@@ -79,8 +79,8 @@ userInput.addEventListener("input", function () {
     // console.log("Faixa 1");
     result = number * aliqF1;
   } else if (number > 10000 && number <= 85000) {
-    // console.log("Faixa 2");
-    result = number * aliqF2 + faixa1;
+    console.log("Faixa 2");
+    result = (number * aliqF2) - faixa1;
   } else if (number > 85000 && number <= 280000) {
     // console.log("Faixa 3");
     result = (number - 85000) * aliqF3 + faixa2;
