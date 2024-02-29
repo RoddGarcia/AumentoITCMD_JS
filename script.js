@@ -16,8 +16,9 @@ let result = 0;
 
 tudo.style.display = "flex";
 tudo.style.justifyContent = "center";
-table.style.width = "50vw";
+// table.style.width = "50vw";
 table.style.border = "none";
+table.style.fontFamily = "Helvetica, Arial, sans-serif";
 
 // Criar linhas e colunas
 const rows = [];
