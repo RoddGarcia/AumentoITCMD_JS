@@ -1,3 +1,11 @@
+/*
+Autor do código:  Rodrigo Garcia de Carvalho
+GitHub:           https://github.com/RoddGarcia
+Linkedin:         https://www.linkedin.com/in/rodrigogarciadec/
+Site de post:     https://www.grupoconsultax.com.br/post/aumento-de-itcmd-estado-de-são-paulo-projeto-de-lei-nº-7-24
+
+*/
+
 // Criar tabela
 const table = document.createElement("table");
 const tudo = document.getElementById("tabela");
@@ -95,10 +103,10 @@ userInput.addEventListener("input", function () {
   let valorEmRS = isNaN(number) ? 0 : result * ValorUFESP_2024;
   let cargaTributaria = isNaN(number)
     ? 0
-    : (result - number * AliquotaFixa_2024) / (number * AliquotaFixa_2024);
+    : ((result - number * AliquotaFixa_2024) / (number * AliquotaFixa_2024));
 
   let valorFinal_cargaTributaria =
-    cargaTributaria < 0 ? -(cargaTributaria) : parseFloat((cargaTributaria * 100).toFixed(6));
+    cargaTributaria < 0 ? -(cargaTributaria.toFixed(6)) : parseFloat((cargaTributaria * 100).toFixed(6));
 
   // Mostrar resultados
   rows[1].cells[1].textContent = `${numberFormatter.format(calculoUFESP)}`; // Format calculoUFESP
